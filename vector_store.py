@@ -70,9 +70,6 @@ class VectorStoreManager:
         else:
             # Add to existing vector store
             self.vector_store.add_documents(documents)
-        
-        # Persist changes
-        self.vector_store.persist()
     
     def similarity_search(self, query: str, k: int = 4) -> List[Document]:
         """

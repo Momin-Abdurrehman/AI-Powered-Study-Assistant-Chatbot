@@ -80,10 +80,10 @@ def main():
     results.append(test_vector_store())
     print()
     
-    print("="*80)
+    print("\n" + "="*80)
     if all(results[:2]):  # First two tests must pass
         print("✓ Core components are working correctly!")
-        if not results[2]:
+        if len(results) > 2 and not results[2]:
             print("\nNote: Set up your OpenAI API key in .env to use the full functionality")
     else:
         print("✗ Some tests failed. Please check the errors above.")

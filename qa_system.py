@@ -30,7 +30,7 @@ class QASystem:
             raise ValueError("OPENAI_API_KEY not found in environment variables")
         
         self.llm = ChatOpenAI(
-            model_name=model_name,
+            model=model_name,
             temperature=temperature,
             openai_api_key=api_key
         )
@@ -93,7 +93,7 @@ Answer with citations (mention page numbers):"""
         
         # Generate answer using LLM
         formatted_prompt = self.prompt.format(context=context, question=question)
-        answer = self.llm.predict(formatted_prompt)
+        answer = self.llm.invoke(formatted_prompt).content
         
         return {
             "answer": answer,
