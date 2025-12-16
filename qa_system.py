@@ -3,10 +3,9 @@ Question-Answering system with citations using RAG.
 """
 import os
 from typing import List, Dict, Any
-from langchain.schema import Document
-from langchain.chains import RetrievalQA
-from langchain_community.chat_models import ChatOpenAI
-from langchain.prompts import PromptTemplate
+from langchain_core.documents import Document
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import PromptTemplate
 from vector_store import VectorStoreManager
 
 

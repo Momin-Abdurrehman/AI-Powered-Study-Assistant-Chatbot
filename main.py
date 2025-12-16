@@ -18,9 +18,9 @@ class StudyAssistant:
         # Load environment variables
         load_dotenv()
         
-        # Initialize components
+        # Initialize components (lazy initialization for vector store)
         self.doc_processor = DocumentProcessor()
-        self.vector_store = VectorStoreManager()
+        self.vector_store = None  # Initialize only when needed
         self.qa_system = None
         self.uploaded_files = []
     
@@ -40,6 +40,11 @@ class StudyAssistant:
             # Process the PDF
             chunks = self.doc_processor.process_pdf(pdf_path)
             print(f"Created {len(chunks)} text chunks from the document")
+            
+            # Initialize vector store on first upload
+            if self.vector_store is None:
+                print("Initializing vector store (this may take a moment on first run)...")
+                self.vector_store = VectorStoreManager()
             
             # Add to vector store
             self.vector_store.add_documents(chunks)
@@ -88,7 +93,9 @@ class StudyAssistant:
     def clear_knowledge_base(self) -> None:
         """Clear all uploaded documents."""
         try:
-            self.vector_store.clear()
+            if self.vector_store:
+                self.vector_store.clear()
+            self.vector_store = None
             self.uploaded_files = []
             self.qa_system = None
             print("\nKnowledge base cleared successfully!")
